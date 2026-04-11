@@ -1,7 +1,14 @@
+import "../assets/style/app.css";
+import ProductList from "./productList.component.jsx";
+import Cart from "./cart.component.jsx";
 const App = () => {
 
   return (
-    <div>composant App à créer</div>
+    <div className="app">
+      <ProductList />
+      <Cart/>
+
+    </div>
   );
 }
 export default App;
