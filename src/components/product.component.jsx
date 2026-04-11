@@ -1,9 +1,12 @@
 import "../assets/style/product.css";
-const Product = () => {
+const Product = ({name, description}) => {
 
   return (
     <div className="product">
-      Product
+      <div className="info">
+          <div className="name">{name}</div>
+          <div className="description">{description}</div>
+      </div> 
     </div>
   );
 }
