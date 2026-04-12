@@ -37,7 +37,7 @@ const App = () => {
     setProducts(products.map(product => product.id === id ? {...product, stock:updatedProduct}:product));
 
     if (quantity===0) {
-      setCart(cart.filter(product => product !== id));
+      setCart(cart.filter(product => product.id !== id));
     } else {
       const prod = cart.find(p => p.id ===id);
       if(prod) {

@@ -6,12 +6,20 @@ import { useState } from "react";
 import Product from "./product.component.jsx";
 import poubelle from "../assets/images/poubelle.jpg"
 const Cart = ({products, cart, handleCartChange}) => {
-  const initialStock = { 1: 5, 2: 10 };
-  const productsInCart = cart.map(id =>{
-    const product = products.find(product => product.id == id);
-    const qtt =initialStock[id] - product.stock;
-    return {...product, quantity: qtt};
+
+  const getInitialStock = id => {
+    const product = products.find(prod=> prod.id === id);
+    const inCart = cart.find(prod => prod.id ===id);
+    const quantityInCart = inCart ? inCart.quantity :0;
+    return product ? product.stock +quantityInCart:0;
+  }
+  const productsQuantity = cart.map(prod =>{
+    const product = products.find(product => product.id == prod.id);
+    if(!product) return null;
+    return {...product, quantity: prod.quantity};
   });
+
+  const productsInCart = productsQuantity.filter(product => product !==null);
 
   const handleRemove = (id) => {
     handleCartChange(id,0);
@@ -19,9 +27,9 @@ const Cart = ({products, cart, handleCartChange}) => {
 
   const handleManualChange = (id, value) => {
     let res = parseInt(value);
-    if(isNaN(res)) res = initialStock[id];
+    if(isNaN(res)) res = 0;
 
-    res = Math.max(0,Math.min(initialStock[id], res));
+    res = Math.max(0,Math.min(getInitialStock(id), res));
     handleCartChange(id,res);
   }
 
@@ -45,7 +53,7 @@ const Cart = ({products, cart, handleCartChange}) => {
             </div>
             <div className="stock"></div>
 
-              <input type="number" value={product.quantity} min="0" max={initialStock[product.id]} onChange={(e) => {const newValue = parseInt(e.target.value); if (!isNaN(newValue)) handleManualChange(product.id, newValue)}}/>
+              <input type="number" value={product.quantity} min="0" max={getInitialStock(product.id)} onChange={(e) => {const newValue = parseInt(e.target.value); if (!isNaN(newValue)) handleManualChange(product.id, newValue)}}/>
 
               <img className="button" src={poubelle} alt="remove" onClick={() =>handleRemove(product.id)}/>
           </div>
@@ -54,6 +62,7 @@ const Cart = ({products, cart, handleCartChange}) => {
 
       <ShoppingCart
           products={products}
+          cart = {cart}
       />
     </div>
   );
