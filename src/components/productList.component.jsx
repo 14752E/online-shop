@@ -2,7 +2,7 @@ import "../assets/style/productList.css";
 import Product from "./product.component.jsx";
 import ProductFilter from "./productFilter.component.jsx";
 const ProductList = ({products, handleStockChange, filterText, setFilterText}) => {
-  const filteredProductsComponents = products.filter(product => product.description.toLowerCase().includes(filterText.toLowerCase()));
+  const filteredProductsComponents = products.filter(product => product.name.toLowerCase().includes(filterText.toLowerCase()));
   const productsComponents = filteredProductsComponents.map(productData => <Product 
                                                             {...productData}
                                                             key = {productData.id}

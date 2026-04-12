@@ -29,7 +29,7 @@ const Cart = ({products, cart, handleCartChange}) => {
     let res = parseInt(value);
     if(isNaN(res)) res = 0;
 
-    res = Math.max(0,Math.min(getInitialStock(id), res));
+    res = Math.max(1,Math.min(getInitialStock(id), res));
     handleCartChange(id,res);
   }
 
@@ -53,7 +53,7 @@ const Cart = ({products, cart, handleCartChange}) => {
             </div>
             <div className="stock"></div>
 
-              <input type="number" value={product.quantity} min="0" max={getInitialStock(product.id)} onChange={(e) => {const newValue = parseInt(e.target.value); if (!isNaN(newValue)) handleManualChange(product.id, newValue)}}/>
+              <input type="number" value={product.quantity} min="1" max={getInitialStock(product.id)} onChange={(e) => {const newValue = parseInt(e.target.value); if (!isNaN(newValue)) handleManualChange(product.id, newValue)}}/>
 
               <img className="button" src={poubelle} alt="remove" onClick={() =>handleRemove(product.id)}/>
           </div>
