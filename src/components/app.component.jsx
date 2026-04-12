@@ -1,40 +1,50 @@
 import "../assets/style/app.css";
 import ProductList from "./productList.component.jsx";
 import Cart from "./cart.component.jsx";
-import { useState } from "react";
-import nounours1 from "../data/images/nounours1.jpg";
-import nounours2 from "../data/images/nounours2.jpg";
+import { useEffect, useState } from "react";
+import dataProducts from "../data/products.js";
 
 const App = () => {
-  const initProducts = () => [{id:1, name:"Nounours marron", weight:300, description:"un joli nounours marron avec un foulard", image: nounours1, price: 35, stock: 5}, 
-                              {id:2, name:"Nounours blanc", weight:250, description:"un ours blanc tout doux", image: nounours2, price: 42, stock: 10} ];
-  const [ products, setProducts] = useState(initProducts());
+  const [ products, setProducts] = useState([]);
   const [ cart, setCart] = useState([]);
 
+  useEffect(() => {
+    const initialProducs = dataProducts.map(product => ({...product, stock:product.stock}));
+    setProducts(initialProducs);
+  },[]);
+
   const handleStockChange = (id) => {
-    const copyProducts = [...products];
-    const updatedProduct = copyProducts.find(product => product.id == id);
-    if (updatedProduct.stock <= 0) return;
-    updatedProduct.stock = updatedProduct.stock-1;
+    const updatedProduct = products.find(product => product.id === id);
+    if (updatedProduct.stock <= 0 || !updatedProduct) return;
+
+    const copyProducts = products.map(product => product.id === id ? { ...product, stock:product.stock-1}:product);
     setProducts(copyProducts);
 
-    const alreadyInCart = cart.find(product => product==id);
+    const alreadyInCart = cart.find(product => product.id===id);
     if (!alreadyInCart) {
-      setCart([...cart, id]);
+      setCart([...cart, {id:id, quantity:1}]);
+    } else {
+      setCart(cart.map(prod => prod.id === id ? {...prod, quantity:prod.quantity+1}:prod));
     }
   }
 
   const handleCartChange = (id, quantity) => {
-    const initialStock = { 1: 5, 2: 10 };
-    const copyProducts = [...products];
-    const updatedProduct = copyProducts.find(product => product.id == id);
-    if (updatedProduct) {
-      updatedProduct.stock = initialStock[id]-quantity;
-      setProducts(copyProducts);
-    }
+    const copyProduct = dataProducts.find(product => product.id === id);
+    if(!copyProduct) return;
+
+    const initialStock = copyProduct.stock;
+    const updatedProduct = initialStock-quantity;
+    setProducts(products.map(product => product.id === id ? {...product, stock:updatedProduct}:product));
 
     if (quantity===0) {
-      setCart(cart.filter(product => product != id));
+      setCart(cart.filter(product => product !== id));
+    } else {
+      const prod = cart.find(p => p.id ===id);
+      if(prod) {
+        setCart(cart.map(p => p.id===id ?{...p, quantity:quantity} : p));
+      } else {
+        setCart([...cart, {id:id, quantity:quantity}]);
+      }
     }
   }
 
