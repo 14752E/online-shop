@@ -7,7 +7,7 @@ const ProductList = ({products, handleStockChange}) => {
                                                             handleStockChange = {handleStockChange}
                                                             />);
   return (
-    <div className="productList">
+    <div className="productZone">
       <h4>Boutique</h4>
       <div>
           {productsComponents}
