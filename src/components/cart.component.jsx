@@ -1,7 +1,7 @@
 import "../assets/style/cart.css";
 import "../assets/style/product.css"
 
-import Total from "./shoppingCart.component.jsx";
+import ShoppingCart from "./shoppingCart.component.jsx";
 import { useState } from "react";
 import Product from "./product.component.jsx";
 import poubelle from "../assets/images/poubelle.jpg"
@@ -52,7 +52,7 @@ const Cart = ({products, cart, handleCartChange}) => {
         ))}
       </div>
 
-      <Total
+      <ShoppingCart
           products={products}
       />
     </div>

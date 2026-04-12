@@ -38,11 +38,14 @@ const App = () => {
     }
   }
 
+  const [filterText,setFilterText] = useState('');
   return (
     <div className="app">
       <ProductList 
           products = {products}
           handleStockChange = {handleStockChange}
+          filterText = {filterText}
+          setFilterText={setFilterText}
           />
       <Cart
           products = {products}
