@@ -9,12 +9,20 @@ const Cart = ({products, cart, handleCartChange}) => {
   const initialStock = { 1: 5, 2: 10 };
   const productsInCart = cart.map(id =>{
     const product = products.find(product => product.id == id);
-    const qtt = Math.max(initialStock[id] - product.stock);
+    const qtt =initialStock[id] - product.stock;
     return {...product, quantity: qtt};
   });
 
   const handleRemove = (id) => {
     handleCartChange(id,0);
+  }
+
+  const handleManualChange = (id, value) => {
+    let res = parseInt(value);
+    if(isNaN(res)) res = initialStock[id];
+
+    res = Math.max(0,Math.min(initialStock[id], res));
+    handleCartChange(id,res);
   }
   return (
     <div className="cart">
@@ -31,7 +39,7 @@ const Cart = ({products, cart, handleCartChange}) => {
             </div>
             <div className="stock"></div>
 
-              <input type="number" value={product.quantity} min="0" max={initialStock[product.id]} onChange={(e) => {const newValue = parseInt(e.target.value); if (!isNaN(newValue)) handleCartChange(product.id, newValue)}}/>
+              <input type="number" value={product.quantity} min="0" max={initialStock[product.id]} onChange={(e) => {const newValue = parseInt(e.target.value); if (!isNaN(newValue)) handleManualChange(product.id, newValue)}}/>
 
               <img className="button" src={poubelle} alt="remove" onClick={() =>handleRemove(product.id)}/>
           </div>
