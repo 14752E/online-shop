@@ -1,7 +1,7 @@
 import "../assets/style/cart.css";
 import "../assets/style/product.css"
 
-import Total from "./total.component.jsx";
+import Total from "./shoppingCart.component.jsx";
 import { useState } from "react";
 import Product from "./product.component.jsx";
 import poubelle from "../assets/images/poubelle.jpg"
@@ -24,9 +24,15 @@ const Cart = ({products, cart, handleCartChange}) => {
     res = Math.max(0,Math.min(initialStock[id], res));
     handleCartChange(id,res);
   }
+
+  const totalWeight = productsInCart.reduce((total,product) => {
+    return total + (product.weight * product.quantity);
+  },0);
+  
   return (
     <div className="cart">
       <h4>Panier</h4>
+      <div className="weight">Poids total : {totalWeight}</div>
       <div>
         {productsInCart.map(product => (
           <div key={product.id} className="product">

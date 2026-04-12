@@ -1,5 +1,5 @@
 import Product from "./product.component.jsx";
-const Total = ({products}) => {
+const ShoppingCart = ({products}) => {
   const initialStock = { 1: 5, 2: 10 };
 
   const total = products.reduce((current, productData)=> {
@@ -11,4 +11,4 @@ const Total = ({products}) => {
     </div>
   );
 }
-export default Total;
+export default ShoppingCart;

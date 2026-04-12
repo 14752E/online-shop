@@ -1,7 +1,7 @@
 import "../assets/style/product.css";
 import panier from "../assets/images/panier.jpg";
 import { useState } from "react";
-import Total from "./total.component.jsx";
+import Total from "./shoppingCart.component.jsx";
 
 const Product = ({id,name, description, weight,image, stock, price, handleStockChange}) => {
   const handleClick = () => handleStockChange(id);
