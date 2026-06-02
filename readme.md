@@ -1,5 +1,5 @@
-# TP 5 : projet 2 "React"
-
+# Online Shop   
+**Projet réalisé dans le cadre de l'UE JavaScript de la L2 Informatique de l'Université de Lille.**
 ## Mise en place du TP
 
   Cette mise en place est similaire à celle du TP précédent. Le dossier `tp5` contient une structure telle que celle décrite dans ce [document](https://www.fil.univ-lille.fr/~routier/enseignement/licence/js-s4/html/template-app.html).
